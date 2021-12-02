@@ -9,17 +9,40 @@
         <a href="/new">Add Link</a>
     </header>
     <main>
-        <% links.forEach(function(link) { %>
-            <a href="<%= link.url %>" target="_blank"><%= link.title %> </a>
-            <% if(link.url.includes("youtube.com")){ %>
-                <% let embedUrl = link.url.slice(32) %>  
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= embedUrl %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <% }%>
-            <a href="/<%= link._id %>">View Details</a>
-            <% if(link.description) { %>  
-                <p>From <%= link.website %> </p>
-            <% } %> 
-        <% }); %> 
+        <div class="accordion" id="listAccordion">
+            <% let i = 0; %> 
+            <% links.forEach(function(link) { %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading<%= i %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="false" aria-controls="collapse<%= i %>">
+                            <%= link.title %> 
+                        </button>
+                    </h2>
+                    <div id="collapse<%= i %>" class="accordion-collapse collapse" aria-labelledby="heading<%= i %>" data-bs-parent="#listAccordion">
+                        <div class="accordion-body">
+                            <a href="<%= link.url %>" target="_blank">Go to Site</a>
+                            <% if(link.url.includes("youtube.com")){ %>
+                                <% let embedUrl = link.url.slice(32) %>
+                                <div class="ratio ratio-16x9 iframe-container">
+                                    <iframe src="https://www.youtube.com/embed/<%= embedUrl %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            <% }%>
+                            <% if(link.description) { %>  
+                                <p>From <%= link.website %> </p>
+                            <% } %>
+                            <% if(link.description) { %> 
+                                <p><%= link.description %> </p>
+                            <% } %>
+                            <a href="/<%= link._id %>/edit">Edit</a>
+                            <form action="/<%= link._id %>?_method=DELETE" method="POST" value="DELETE">
+                                <input type="submit" value="Delete">
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+                <% i++; %> 
+            <% }); %> 
+        </div>
     </main>
 
 </body>

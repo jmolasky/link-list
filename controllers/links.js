@@ -10,10 +10,10 @@ const Link = require("../models/link");
 linksRouter.get("/seed", async (req, res) => {
     const data = [
         {
-            title: "FULL MATCH | Arsenal v Newcastle | Emirates FA Cup Third Round 2020-21",
-            url: "https://www.youtube.com/watch?v=vKcOGmfTwqY",
+            title: "KMFDM 97 GERMANY",
+            url: "https://www.youtube.com/watch?v=Sp9Pvb2ulbQ",
             website: "YouTube",
-            description: "Super-sub Emile Smith Rowe was the difference as he scored late in extra-time to help Arsenal beat Newcastle United, as Pierre-Emerick Aubameyang's goal sealed the Gunners spot in the Fourth Round of the Emirates FA Cup.",
+            description: "ViVA show",
             private: false,
         },
         {
