@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
-// const linksController = require("./controllers/links");
+const linksController = require("./controllers/links");
 
 // Initialize app
 const app = express();
@@ -21,6 +21,7 @@ db.on("connected", () => console.log("mongo connected"));
 db.on("disconnected", () => console.log("mongo disconnected"));
 
 // Middleware
+app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static("public"));

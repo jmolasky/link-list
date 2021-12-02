@@ -21,4 +21,11 @@ linksRouter.get("/seed", async (req, res) => {
     res.redirect("/");
 });
 
-//
+// Index
+linksRouter.get("/", (req, res) => {
+    Link.find({}, (err, links) => {
+        res.render("index.ejs", { links });
+    });
+});
+
+module.exports = linksRouter;
