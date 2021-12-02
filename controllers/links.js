@@ -39,6 +39,13 @@ linksRouter.get("/new", (req, res) => {
     res.render("new.ejs");
 });
 
+// Delete
+linksRouter.delete("/:id", (req, res) => {
+    Link.findByIdAndDelete(req.params.id, (err, link) => {
+        res.redirect("/");
+    });
+});
+
 // Create
 linksRouter.post("/", (req, res) => {
     req.body.private = !!req.body.private;

@@ -16,7 +16,10 @@
             <% }%>
             <% if(link.description) { %> 
                 <p><%= link.description %> </p>
-            <% } %> 
+            <% } %>
+            <form action="/<%= link._id %>?_method=DELETE" method="POST" value="DELETE">
+                <input type="submit" value="Delete">
+            </form> 
     </main>
     
 </body>
