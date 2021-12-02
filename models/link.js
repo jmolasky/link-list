@@ -6,6 +6,7 @@ const linkSchema = new Schema(
     {
         title: { type: String, required: true },
         url: { type: String, required: true },
+        website: String,
         description: String,
         private: Boolean
     },
