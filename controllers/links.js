@@ -29,6 +29,7 @@ linksRouter.get("/seed", async (req, res) => {
 
 // Index
 linksRouter.get("/", (req, res) => {
+    // store categories in database?
     Link.find({}, (err, links) => {
         res.render("index.ejs", { links });
     });
@@ -46,6 +47,17 @@ linksRouter.delete("/:id", (req, res) => {
     });
 });
 
+// Update
+linksRouter.put("/:id", (req, res) => {
+    req.body.private = !!req.body.private;
+    if(req.body.description === '') {
+        delete req.body.description;
+    }
+    Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, link) => {
+        res.redirect(`/${req.params.id}`);
+    });
+});
+
 // Create
 linksRouter.post("/", (req, res) => {
     req.body.private = !!req.body.private;
@@ -54,6 +66,13 @@ linksRouter.post("/", (req, res) => {
     }
     Link.create(req.body, (error, link) => {
         res.redirect("/");
+    });
+});
+
+// Edit
+linksRouter.get("/:id/edit", (req, res) => {
+    Link.findById(req.params.id, (err, link) => {
+        res.render("edit.ejs", { link });
     });
 });
 

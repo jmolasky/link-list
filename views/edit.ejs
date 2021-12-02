@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head"); %> 
+</head>
+<body>
+    <header>
+        <h1>Add a Link!</h1>
+    </header>
+    <main class="container">
+        <a href="/">Back</a>
+        <form class="row row-cols-1 row-cols-md-2" action="/<%= link._id %>?_method=PUT" method="POST">
+            <div class="col mb-3">
+                <label class="form-label">Link Title</label>
+                <input type="text" class="form-control" name="title" value="<%= link.title %>">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Link URL</label>
+                <input type="text" class="form-control" name="url" value="<%= link.url %>">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Website</label>
+                <input type="text" class="form-control" name="website" value="<%= link.website %>">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Description</label>
+                <input type="text" class="form-control" name="description" value="<%= link.description %>">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Private</label>
+                <input type="checkbox" name="private" <%= link.private ? 'checked' : '' %> >
+            </div>
+            <div class="col mb-3 add-edit-btn">
+                <input class="btn btn-primary" type="submit" name="" value="Submit Changes">
+            </div>
+        </form>
+
+    </main>
+    
+</body>
+</html>
