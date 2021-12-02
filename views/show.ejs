@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <%- include("./partials/head"); %> 
+    <%- include("./partials/head"); %> 
 </head>
 <body>
     <header>
-        <h1>Link List</h1>
+        <h1><%= link.title %> </h1>
     </header>
     <main>
-        <% links.forEach(function(link) { %>
-            <a href="<%= link.url %>" target="_blank"><%= link.title %> </a>
+        <a href="/">Back</a> <br>
+        <a href="<%= link.url %>" target="_blank"><%= link.title %> </a>
             <% if(link.url.includes("youtube.com")){ %>
                 <% let embedUrl = link.url.slice(32) %>  
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= embedUrl %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <% }%>
-            <a href="/<%= link._id %>">View Details</a>
-            <% if(link.description) { %>  
-                <p>From <%= link.website %> </p>
-            <% } %> 
-        <% }); %> 
     </main>
-
+    
 </body>
 </html>

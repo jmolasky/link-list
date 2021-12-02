@@ -16,6 +16,11 @@ linksRouter.get("/seed", async (req, res) => {
             description: "Super-sub Emile Smith Rowe was the difference as he scored late in extra-time to help Arsenal beat Newcastle United, as Pierre-Emerick Aubameyang's goal sealed the Gunners spot in the Fourth Round of the Emirates FA Cup.",
             private: false,
         },
+        {
+            title: ".filter() jQuery API documentation",
+            url: "https://api.jquery.com/filter/",
+            private: false,
+        },
     ];
     await Link.deleteMany({});
     await Link.create(data);
@@ -28,5 +33,12 @@ linksRouter.get("/", (req, res) => {
         res.render("index.ejs", { links });
     });
 });
+
+// Show
+linksRouter.get("/:id", (req, res) => {
+    Link.findById(req.params.id, (err, link) => {
+        res.render("show.ejs", { link });
+    });
+})
 
 module.exports = linksRouter;
