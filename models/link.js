@@ -8,7 +8,7 @@ const linkSchema = new Schema(
         url: { type: String, required: true },
         website: String,
         description: String,
-        private: Boolean
+        private: { type: Boolean, required: true },
     },
     { timestamps: true }
 

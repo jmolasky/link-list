@@ -34,11 +34,28 @@ linksRouter.get("/", (req, res) => {
     });
 });
 
+// New
+linksRouter.get("/new", (req, res) => {
+    res.render("new.ejs");
+});
+
+// Create
+linksRouter.post("/", (req, res) => {
+    req.body.private = !!req.body.private;
+    if(req.body.description === '') {
+        delete req.body.description;
+    }
+    Link.create(req.body, (error, link) => {
+        res.redirect("/");
+    });
+});
+
 // Show
 linksRouter.get("/:id", (req, res) => {
     Link.findById(req.params.id, (err, link) => {
         res.render("show.ejs", { link });
     });
-})
+});
+
 
 module.exports = linksRouter;
