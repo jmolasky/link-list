@@ -4,14 +4,14 @@ const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
 usersRouter.get("/login", (req, res) => {
-    res.render("login.ejs", { err: ''});
+    res.render("login.ejs", { err: '', navBrand: "Log In"});
 });
 
 usersRouter.post("/login", (req, res) => {
     User.findOne({ email: req.body.email }, "+password", (err, foundUser) => {
         if(!foundUser) return res.render("login.ejs", { err: "invalid credentials"});
         if(!bcrypt.compareSync(req.body.password, foundUser.password)) {
-            return res.render("login.ejs", { err: "invalid credentials"});
+            return res.render("login.ejs", { err: "invalid credentials", navBrand: "Log In"});
         }
         req.session.user = foundUser._id;
         res.redirect("/");
@@ -19,7 +19,7 @@ usersRouter.post("/login", (req, res) => {
 });
 
 usersRouter.get("/signup", (req, res) => {
-    res.render("signup.ejs");
+    res.render("signup.ejs", { navBrand: "Sign Up"});
 });
 
 usersRouter.post("/signup", (req, res) => {

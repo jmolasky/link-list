@@ -4,9 +4,7 @@
     <%- include("./partials/head"); %> 
 </head>
 <body>
-    <header>
-        <h1>Add a Link!</h1>
-    </header>
+    <%- include("./partials/header"); %> 
     <main class="container">
         <a href="/">Back</a>
         <form class="row row-cols-1 row-cols-md-2" action="/<%= link._id %>?_method=PUT" method="POST">

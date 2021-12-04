@@ -30,14 +30,18 @@ linksRouter.get("/seed", async (req, res) => {
 // Index
 linksRouter.get("/", (req, res) => {
     // store categories in database?
-    Link.find({}, (err, links) => {
-        res.render("index.ejs", { links });
-    });
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        Link.find({}, (err, links) => {
+            res.render("index.ejs", { links, navBrand: "Links" });
+        });
+    }
 });
 
 // New
 linksRouter.get("/new", (req, res) => {
-    res.render("new.ejs");
+    res.render("new.ejs", { navBrand: "Add a Link" });
 });
 
 // Delete
@@ -54,7 +58,7 @@ linksRouter.put("/:id", (req, res) => {
         delete req.body.description;
     }
     Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, link) => {
-        res.redirect(`/${req.params.id}`);
+        res.redirect("/");
     });
 });
 
@@ -73,16 +77,8 @@ linksRouter.post("/", (req, res) => {
 // Edit
 linksRouter.get("/:id/edit", (req, res) => {
     Link.findById(req.params.id, (err, link) => {
-        res.render("edit.ejs", { link });
+        res.render("edit.ejs", { link, navBrand: "Edit Link" });
     });
 });
-
-// Show
-linksRouter.get("/:id", (req, res) => {
-    Link.findById(req.params.id, (err, link) => {
-        res.render("show.ejs", { link });
-    });
-});
-
 
 module.exports = linksRouter;

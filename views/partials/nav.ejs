@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><%= navBrand %></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Home</a>
+                <% if(user) { %> 
+                    <a class="nav-link" href="/new">Add Link</a>
+                    <a class="nav-link" href="/logout">Log Out</a>
+                <% } else { %>
+                    <a class="nav-link" href="/signup">Sign Up</a>
+                    <a class="nav-link" href="/login">Log In</a> 
+                <% } %> 
+            </div>
+        </div>
+    </div>
+</nav>
