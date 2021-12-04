@@ -60,6 +60,7 @@ linksRouter.put("/:id", (req, res) => {
 
 // Create
 linksRouter.post("/", (req, res) => {
+    // call the linkpreview.net API here to get image for site preview to add to database
     req.body.private = !!req.body.private;
     if(req.body.description === '') {
         delete req.body.description;
