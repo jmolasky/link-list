@@ -49,7 +49,11 @@ linksRouter.get("/", (req, res) => {
 
 // New
 linksRouter.get("/new", (req, res) => {
-    res.render("new.ejs", { navBrand: "Add a Link" });
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        res.render("new.ejs", { navBrand: "Add a Link" });
+    }
 });
 
 // Delete
@@ -62,9 +66,12 @@ linksRouter.delete("/:id", (req, res) => {
 // Update
 linksRouter.put("/:id", (req, res) => {
     req.body.private = !!req.body.private;
-    req.body.user_id = res.locals.user._id;
+    //req.body.user_id = res.locals.user._id;
     if(req.body.description === '') {
-        delete req.body.description;
+        req.body.description = null;
+    }
+    if(req.body.website === '') {
+        req.body.website = null;
     }
     Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, link) => {
         res.redirect("/");
@@ -77,9 +84,7 @@ linksRouter.post("/", async (req, res) => {
     // call the linkpreview.net API here to get image for site preview to add to database
     if(!req.body.url.includes("youtube.com")) {
         await axios.get(`${BASE_URL}?key=${API_KEY}&q=${url}`).then(response => {
-            console.log(typeof response.data.image);
             req.body.img = response.data.image;
-            console.log(req.body);
         });
     }
     req.body.private = !!req.body.private;
@@ -94,9 +99,13 @@ linksRouter.post("/", async (req, res) => {
 
 // Edit
 linksRouter.get("/:id/edit", (req, res) => {
-    Link.findById(req.params.id, (err, link) => {
-        res.render("edit.ejs", { link, navBrand: "Edit Link" });
-    });
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        Link.findById(req.params.id, (err, link) => {
+            res.render("edit.ejs", { link, navBrand: "Edit Link" });
+        });
+    }
 });
 
 module.exports = linksRouter;

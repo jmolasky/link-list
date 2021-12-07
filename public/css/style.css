@@ -2,6 +2,10 @@
     max-width: 30rem;
 }
 
+.image-preview {
+    max-width: 30rem;
+}
+
 main {
     display: grid;
 }

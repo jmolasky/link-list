@@ -17,16 +17,18 @@
                     </h2>
                     <div id="collapse<%= i %>" class="accordion-collapse collapse" aria-labelledby="heading<%= i %>" data-bs-parent="#listAccordion">
                         <div class="accordion-body">
-                            <a href="<%= link.url %>" target="_blank">Go to Site</a>
                             <% if(link.url.includes("youtube.com")){ %>
                                 <% let embedUrl = link.url.slice(32) %>
                                 <div class="ratio ratio-16x9 iframe-container">
                                     <iframe src="https://www.youtube.com/embed/<%= embedUrl %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <% } else { %> 
-                                    <img src="<%= link.img %> " alt="">
+                                    <a href="<%= link.url %>" target="_blank">Go to Site</a>
+                                    <div class="ratio ratio-16x9 image-preview">
+                                        <img src="<%= link.img %>" alt="">
+                                    </div>
                                 <% } %> 
-                            <% if(link.description) { %>  
+                            <% if(link.website) { %>  
                                 <p>From <%= link.website %> </p>
                             <% } %>
                             <% if(link.description) { %> 
