@@ -6,7 +6,7 @@
 <body>
     <%- include("./partials/header"); %> 
     <main class="container">
-        <form class="row row-cols-1 row-cols-md-2" action="/signup" method="POST">
+        <form class="row row-cols-1 login-signup" action="/signup" method="POST">
             <div class="col mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" class="form-control" name="email">
@@ -20,6 +20,6 @@
             </div>
         </form>
     </main>
-    
+    <%- include("./partials/footer") %> 
 </body>
 </html>
