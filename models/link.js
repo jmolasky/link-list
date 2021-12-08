@@ -6,7 +6,8 @@ const linkSchema = new Schema(
     {
         title: { type: String, required: true },
         url: { type: String, required: true },
-        user_id: { type: String, required: true },
+        // user_id: { type: String, required: true },
+        user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
         website: String,
         description: String,
         img: String,

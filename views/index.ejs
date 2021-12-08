@@ -46,6 +46,16 @@
         </div>
         <aside>
             <p>Aside</p>
+            <form class="" action="/search" method="POST">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col col-md-8">
+                        <input type="text" class="form-control mb-3" name="term" placeholder="Search for a Link">
+                    </div>
+                    <div class="col col-md-4 d-grid d-md-flex justify-content-md-end mb-3">
+                        <input class="btn btn-primary" type="submit" name="" value="Search">
+                    </div>
+                </div>
+            </form>
         </aside>
     </main>
     <%- include("./partials/footer") %> 

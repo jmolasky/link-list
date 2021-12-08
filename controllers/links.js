@@ -10,29 +10,43 @@ const API_KEY = process.env.API_KEY;
 
 // Routes / Controllers
 
+// Search Route
+linksRouter.get("/search", async (req, res) => {
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        const term = req.body.term;
+        const links = await Link.find({ title: { $regex: term }});
+        res.render("index.ejs", { links, navBrand: "Search Results"})
+    }
+});
+
 // seed route
 
 linksRouter.get("/seed", async (req, res) => {
-    console.log(res.locals.user);
-    const data = [
-        {
-            title: "KMFDM 97 GERMANY",
-            url: "https://www.youtube.com/watch?v=Sp9Pvb2ulbQ",
-            user_id: res.locals.user._id,
-            website: "YouTube",
-            description: "ViVA show",
-            private: false,
-        },
-        {
-            title: ".filter() jQuery API documentation",
-            url: "https://api.jquery.com/filter/",
-            user_id: res.locals.user._id,
-            private: false,
-        },
-    ];
-    await Link.deleteMany({});
-    await Link.create(data);
-    res.redirect("/");
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        const data = [
+            {
+                title: "KMFDM 97 GERMANY",
+                url: "https://www.youtube.com/watch?v=Sp9Pvb2ulbQ",
+                user_id: res.locals.user._id,
+                website: "YouTube",
+                description: "ViVA show",
+                private: false,
+            },
+            {
+                title: ".filter() jQuery API documentation",
+                url: "https://api.jquery.com/filter/",
+                user_id: res.locals.user._id,
+                private: false,
+            },
+        ];
+        await Link.deleteMany({});
+        await Link.create(data);
+        res.redirect("/");
+    }
 });
 
 // Index
@@ -64,7 +78,7 @@ linksRouter.delete("/:id", (req, res) => {
 });
 
 // Update
-linksRouter.put("/:id", (req, res) => {
+linksRouter.put("/:id", async (req, res) => {
     req.body.private = !!req.body.private;
     //req.body.user_id = res.locals.user._id;
     if(req.body.description === '') {
@@ -73,9 +87,16 @@ linksRouter.put("/:id", (req, res) => {
     if(req.body.website === '') {
         req.body.website = null;
     }
-    Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, link) => {
-        res.redirect("/");
-    });
+    if(!req.body.url.includes("youtube.com")) {
+        const url = req.body.url;
+        await axios.get(`${BASE_URL}?key=${API_KEY}&q=${url}`).then(response => {
+            req.body.img = response.data.image;
+        });
+    }
+    // Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, link) => {
+    // });
+    await Link.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.redirect("/");
 });
 
 // Create
