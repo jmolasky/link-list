@@ -18,6 +18,6 @@ A web application that uses MongoDB and Express to allow users to save links to 
 
 ## Getting Started 
 
-[Click here](#) to see the site live!
+[Click here](https://link-list-92.herokuapp.com/) to see the site live!
 
 ## Future Enhancements

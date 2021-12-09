@@ -11,18 +11,20 @@ const API_KEY = process.env.API_KEY;
 // Routes / Controllers
 
 // Search Route
-linksRouter.get("/search", async (req, res) => {
+linksRouter.post("/search", async (req, res) => {
     if(res.locals.user === null) {
         res.redirect("/login");
     } else {
         const term = req.body.term;
-        const links = await Link.find({ title: { $regex: term }});
-        res.render("index.ejs", { links, navBrand: "Search Results"})
+        let links = await Link.find({ title: { $regex: term }});
+        if(links.length === 0) {
+            links = "No Results";
+        }
+        res.render("index.ejs", { links, navBrand: "Search Results"});
     }
 });
 
 // seed route
-
 linksRouter.get("/seed", async (req, res) => {
     if(res.locals.user === null) {
         res.redirect("/login");
