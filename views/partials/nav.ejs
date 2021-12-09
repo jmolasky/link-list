@@ -6,8 +6,9 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarText">
             <div class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
                 <% if(user) { %> 
+                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
                     <a class="nav-link" href="/new">Add Link</a>
                     <a class="nav-link" href="/logout">Log Out</a>
                 <% } else { %>

@@ -55,7 +55,9 @@ linksRouter.get("/", (req, res) => {
     if(res.locals.user === null) {
         res.redirect("/login");
     } else {
-        Link.find({}, (err, links) => {
+        const id = req.session.user;
+        // find only links belonging to the user
+        Link.find({ user_id: id }, (err, links) => {
             res.render("index.ejs", { links, navBrand: "Links" });
         });
     }

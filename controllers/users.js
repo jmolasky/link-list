@@ -37,4 +37,31 @@ usersRouter.get("/logout", (req, res) => {
     });
 });
 
+// Update email or password
+
+// Update
+usersRouter.put("/dashboard", async (req, res) => {
+    if(req.body.email === '') {
+        delete req.body.email;
+    }
+    if(req.body.password === '') {
+        delete req.body.password;
+    } else {
+        const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
+        req.body.password = hash;
+    }
+    await User.findByIdAndUpdate(req.session.user, req.body, { new: true});
+    res.redirect("/dashboard");
+});
+
+// Edit
+usersRouter.get("/dashboard", async (req, res) => {
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        const user = await User.findById(req.session.user);
+        res.render("dashboard.ejs", { user, navBrand: "Dashboard" });
+    }
+});
+
 module.exports = usersRouter;
