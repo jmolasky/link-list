@@ -19,7 +19,7 @@
         <% if(links === "No Results" && navBrand === "Search Results") { %> 
             <h4><%= links %></h4>
         <% } else { %> 
-            <div class="accordion row row-cols-1 row-cols-md-2" id="listAccordion">
+            <div class="accordion accordion-flush row row-cols-1 row-cols-md-2" id="listAccordion">
                 <% let i = 0; %> 
                 <% links.forEach(function(link) { %>
                     <div class="accordion-item col">
