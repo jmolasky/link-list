@@ -112,8 +112,8 @@ async function addLink(linkData) {
     return link;
 }
 
-async function addTag(tagData) {
-    const tag = await Tag.create({ name: tagData });
+async function addTag(tagData, userId) {
+    const tag = await Tag.create({ name: tagData, user: userId });
     return tag;
 }
 
@@ -164,7 +164,7 @@ linksRouter.post("/", async (req, res) => {
         tagArray.forEach(async function(tag) {
             console.log(tag);
             // add each tag to the database
-            const databaseTag = await addTag(tag);
+            const databaseTag = await addTag(tag, req.session.user);
             console.log(databaseTag);
             // add tag's id to the link on the database
             await addTagToLink(link._id, databaseTag);
