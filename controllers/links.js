@@ -1,6 +1,7 @@
 // Require dependencies
 const express = require("express");
 const linksRouter = express.Router();
+const mongoose = require("mongoose");
 const Link = require("../models/link");
 const Tag = require("../models/tag");
 
@@ -61,7 +62,7 @@ linksRouter.get("/", async (req, res) => {
     } else {
         const id = req.session.user;
         // find all tags on the database (TODO: only find tags with user_id?)
-        const tags = await Tag.find({});
+        const tags = await Tag.find({ user: id });
         // find only links belonging to the user
         const links = await Link.find({ user_id: id });
         res.render("index.ejs", { links, tags, navBrand: "Links" });
@@ -118,13 +119,11 @@ async function addTag(tagData, userId) {
 }
 
 async function addTagToLink(linkId, tag) {
-    console.log("addTagToLink");
     await Link.findByIdAndUpdate(linkId, { $push: { tags: tag._id } }, { new: true });
     return;
 }
 
 async function addLinkToTag(tagId, link) {
-    console.log("addLinkToTag");
     await Tag.findByIdAndUpdate(tagId, { $push: { links: link._id } }, { new: true });
     return;
 }
@@ -133,7 +132,7 @@ async function addLinkToTag(tagId, link) {
 linksRouter.post("/", async (req, res) => {
     
     const url = req.body.url;
-
+    const userId = req.session.user;
     // call the linkpreview.net API to get image for site preview to add to database
     if(!req.body.url.includes("youtube.com")) {
         await axios.get(`${BASE_URL}?key=${API_KEY}&q=${url}`).then(response => {
@@ -144,13 +143,16 @@ linksRouter.post("/", async (req, res) => {
     // set private to true or false
     req.body.private = !!req.body.private;
     // insert user's id into link 
-    req.body.user_id = req.session.user;
+    req.body.user_id = userId;
 
     if(req.body.description === '') {
         delete req.body.description;
     }
 
     // create an array of tags based on the tags property of req.body
+    // tags must be comma-separated with no spaces in order to avoid errors and duplicates on database
+    // TODO: make this part more user-friendly - maybe make the array on the front-end before sending it to the 
+    // back-end already-constructed?
     const tagArray = req.body.tags.split(",");
     // delete the tags property from req.body
     delete req.body.tags;
@@ -162,14 +164,24 @@ linksRouter.post("/", async (req, res) => {
     if(tagArray) {
         // iterate over tags in array
         tagArray.forEach(async function(tag) {
-            console.log(tag);
-            // add each tag to the database
-            const databaseTag = await addTag(tag, req.session.user);
-            console.log(databaseTag);
-            // add tag's id to the link on the database
-            await addTagToLink(link._id, databaseTag);
-            // add link's id to the tag on the database
-            await addLinkToTag(databaseTag._id, link);
+            // check the database to make sure tag isn't a duplicate
+            const duplicateTag = await Tag.find({ user: mongoose.Types.ObjectId( userId ), name: tag });
+            console.log(duplicateTag);
+            // if the tag isn't a duplicate
+            if(duplicateTag.length === 0) {
+                // add tag to the database
+                const databaseTag = await addTag(tag, req.session.user);
+                // add tag's id to the link on the database
+                await addTagToLink(link._id, databaseTag);
+                // add link's id to the tag on the database
+                await addLinkToTag(databaseTag._id, link);
+            // if the tag is a duplicate
+            } else {
+                // add the duplicate tag's id to the link
+                await addTagToLink(link._id, duplicateTag[0]);
+                // add the link's id to the tag already on the database
+                await addLinkToTag(duplicateTag[0]._id, link);
+            }
         });
     }
     res.redirect("/");
