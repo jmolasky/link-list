@@ -83,6 +83,7 @@ linksRouter.delete("/:id", async (req, res) => {
     if(res.locals.user === null) {
         res.redirect("/login");
     } else {
+        // delete link from database and return a copy of deleted link with tags field populated
         const link = await Link.findByIdAndDelete(req.params.id).populate("tags");
         // iterate through each tag of the deleted link
         link.tags.forEach(async function(tag) {
