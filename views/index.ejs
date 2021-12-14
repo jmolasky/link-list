@@ -47,6 +47,12 @@
                                 <% if(link.description) { %> 
                                     <p><%= link.description %> </p>
                                 <% } %>
+                                <% if(link.tags !== null) { %> 
+                                    <% link.tags.forEach(function(tag) { %>
+                                        <span class="tag badge rounded-pill bg-info text-dark"><%= tag.name %></span>
+                                    <% }); %> 
+                                <% } %>
+                                <br> 
                                 <a href="/<%= link._id %>/edit">Edit</a>
                                 <form action="/<%= link._id %>?_method=DELETE" method="POST" value="DELETE">
                                     <input type="submit" value="Delete">

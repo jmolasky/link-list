@@ -64,7 +64,14 @@ linksRouter.get("/", async (req, res) => {
         // find all tags on the database (TODO: only find tags with user_id?)
         const tags = await Tag.find({ user: id });
         // find only links belonging to the user
-        const links = await Link.find({ user_id: id });
+        const links = await Link.find({ user_id: id }).populate("tags", "name");
+        links.forEach(function(link) {
+            console.log(link);
+        });
+        // links.forEach(async function(link) {
+        //     await link.populate("tags");
+        //     console.log(link);
+        // });
         res.render("index.ejs", { links, tags, navBrand: "Links" });
     }
 });
