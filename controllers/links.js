@@ -149,10 +149,11 @@ linksRouter.post("/", async (req, res) => {
         delete req.body.description;
     }
 
+    if(req.body.website === '') {
+        delete req.body.website;
+    }
+
     // create an array of tags based on the tags property of req.body
-    // tags must be comma-separated with no spaces in order to avoid errors and duplicates on database
-    // TODO: make this part more user-friendly - maybe make the array on the front-end before sending it to the 
-    // back-end already-constructed?
     let tagArray = [];
     if(req.body.tags !== '') {
         tagArray = req.body.tags.split(",");

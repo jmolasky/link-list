@@ -32,6 +32,7 @@ $(function() {
         if(tag) {
             tagsArray.push(tag);
             // const tagString = tagsArray.join();
+            console.log(tagsArray);
             $tagsHidden.val(tagsArray);
             $tagsInput.val("");
             $tagsDisplay.append(`
@@ -44,7 +45,15 @@ $(function() {
 
     function handleRemoveTag(evt) {
         evt.preventDefault();
-        evt.currentTarget.closest(".tag").remove();
+        const $tag = evt.currentTarget.closest(".tag");
+        // get just text and remove white space
+        const tagText = $($($tag).contents()[0]).text().trim();
+        $tag.remove();
+        // remove tag from tagsArray
+        tagsArray = $.grep(tagsArray, function(value, idx) {
+            return value !== tagText;
+        });
+        $tagsHidden.val(tagsArray);
     }
 
     function handleSubmit() {
