@@ -79,10 +79,23 @@ linksRouter.get("/new", (req, res) => {
 });
 
 // Delete
-linksRouter.delete("/:id", (req, res) => {
-    Link.findByIdAndDelete(req.params.id, (err, link) => {
+linksRouter.delete("/:id", async (req, res) => {
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        const link = await Link.findByIdAndDelete(req.params.id).populate("tags");
+        // iterate through each tag of the deleted link
+        link.tags.forEach(async function(tag) {
+            if(tag.links.length > 1) {
+                // remove only reference to link from tag on database
+                await Tag.findByIdAndUpdate(tag._id, { $pull: { links: link._id } }, { new: true });
+            } else {
+                // remove the entire tag on the database
+                await Tag.findByIdAndDelete(tag._id);
+            }
+        });
         res.redirect("/");
-    });
+    }
 });
 
 // Update

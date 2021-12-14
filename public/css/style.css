@@ -38,3 +38,7 @@ footer {
 .add-edit-btn {
     height: 38px;
 }
+
+.remove-tag-btn:hover {
+    cursor: pointer;
+}
