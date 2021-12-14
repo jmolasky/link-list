@@ -26,6 +26,19 @@ linksRouter.post("/search", async (req, res) => {
     }
 });
 
+// Filter Route
+linksRouter.post("/filter", async (req, res) => {
+    if(res.locals.user === null) {
+        res.redirect("/login");
+    } else {
+        const tags = await Tag.find({ user: res.locals.user });
+        let tag = await Tag.findOne({ user: mongoose.Types.ObjectId( res.locals.user ), name: req.body.tag });
+        tag = await tag.populate("links");
+        const links = tag.links;
+        res.render("index.ejs", { links, tags, navBrand: "links"});
+    }
+});
+
 // seed route
 linksRouter.get("/seed", async (req, res) => {
     if(res.locals.user === null) {
@@ -61,17 +74,10 @@ linksRouter.get("/", async (req, res) => {
         res.redirect("/login");
     } else {
         const id = req.session.user;
-        // find all tags on the database (TODO: only find tags with user_id?)
+        // find all tags on the database 
         const tags = await Tag.find({ user: id });
         // find only links belonging to the user
         const links = await Link.find({ user_id: id }).populate("tags", "name");
-        links.forEach(function(link) {
-            console.log(link);
-        });
-        // links.forEach(async function(link) {
-        //     await link.populate("tags");
-        //     console.log(link);
-        // });
         res.render("index.ejs", { links, tags, navBrand: "Links" });
     }
 });

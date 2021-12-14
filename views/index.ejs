@@ -52,11 +52,13 @@
                                         <span class="tag badge rounded-pill bg-info text-dark"><%= tag.name %></span>
                                     <% }); %> 
                                 <% } %>
-                                <br> 
-                                <a href="/<%= link._id %>/edit">Edit</a>
-                                <form action="/<%= link._id %>?_method=DELETE" method="POST" value="DELETE">
-                                    <input type="submit" value="Delete">
-                                </form> 
+                                <br>
+                                <div class="edit-delete-btn">
+                                    <a class="btn btn-warning" href="/<%= link._id %>/edit">Edit</a>
+                                    <form action="/<%= link._id %>?_method=DELETE" method="POST" value="DELETE">
+                                        <input class="btn btn-secondary" type="submit" value="Delete">
+                                    </form> 
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -65,7 +67,18 @@
             </div>
         <% } %>
         <aside>
-            <p>Aside</p>
+            <h6>Find by tag</h6>
+            <% if(tags.length){ %>
+                <% tags.forEach(function(tag) { %>
+                    <form action="/filter" method="POST">
+                        <input type="hidden" name="tag" value="<%= tag.name %>">
+                        <input class="btn" type="submit" value="<%= tag.name %>">
+                    </form>
+                    <% }); %> 
+            <% } else { %>
+                <br>
+                <p>No tags</p>
+            <% } %> 
         </aside>
     </main>
     <%- include("./partials/footer") %> 

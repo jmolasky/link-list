@@ -39,6 +39,16 @@ footer {
     height: 38px;
 }
 
+.edit-delete-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: .5rem;
+}
+
+.edit-delete-btn > * {
+    margin-left: .5rem;
+}
+
 .remove-tag-btn:hover {
     cursor: pointer;
 }
