@@ -153,7 +153,10 @@ linksRouter.post("/", async (req, res) => {
     // tags must be comma-separated with no spaces in order to avoid errors and duplicates on database
     // TODO: make this part more user-friendly - maybe make the array on the front-end before sending it to the 
     // back-end already-constructed?
-    const tagArray = req.body.tags.split(",");
+    let tagArray = [];
+    if(req.body.tags !== '') {
+        tagArray = req.body.tags.split(",");
+    }
     // delete the tags property from req.body
     delete req.body.tags;
 
@@ -161,12 +164,11 @@ linksRouter.post("/", async (req, res) => {
     const link = await addLink(req.body);
 
     // if there is a tag array
-    if(tagArray) {
+    if(tagArray.length > 0) {
         // iterate over tags in array
         tagArray.forEach(async function(tag) {
             // check the database to make sure tag isn't a duplicate
             const duplicateTag = await Tag.find({ user: mongoose.Types.ObjectId( userId ), name: tag });
-            console.log(duplicateTag);
             // if the tag isn't a duplicate
             if(duplicateTag.length === 0) {
                 // add tag to the database

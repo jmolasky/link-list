@@ -6,7 +6,7 @@
 <body>
     <%- include("./partials/header"); %> 
     <main class="container">
-        <form class="row row-cols-1 row-cols-md-2" action="/" method="POST">
+        <form class="row row-cols-1 row-cols-md-2" id="add-form" action="/" method="POST">
             <div class="col mb-3">
                 <label class="form-label">Link Title</label>
                 <input type="text" class="form-control" name="title">
@@ -24,8 +24,10 @@
                 <input type="text" class="form-control" name="description">
             </div>
             <div class="col mb-3">
-                <label class="form-label">Tags</label>
-                <input type="text" class="form-control" name="tags">
+                <label class="form-label">Enter tags here</label>
+                <input type="hidden" class="form-control" id="tags-hidden" value="" name="tags">
+                <input type="text" class="form-control" id="tags-input">
+                <button class="btn btn-success" id="tag-btn">Add Tag</button>
             </div>
             <div class="col mb-3 add-edit-btn d-grid mx-auto justify-content-md-end">
                 <input class="btn btn-primary" type="submit" name="" value="Add Link">
@@ -35,6 +37,8 @@
                 <input type="checkbox" class="" name="private" checked>
             </div>
         </form>
+        <div id="tags-display">
+        </div>
 
     </main>
     <%- include("./partials/footer") %> 
