@@ -17,12 +17,13 @@ linksRouter.post("/search", async (req, res) => {
     if(res.locals.user === null) {
         res.redirect("/login");
     } else {
+        const tags = await Tag.find({ user: res.locals.user });
         const term = req.body.term;
         let links = await Link.find({ title: { $regex: term }});
         if(links.length === 0) {
             links = "No Results";
         }
-        res.render("index.ejs", { links, navBrand: "Search Results"});
+        res.render("index.ejs", { links, tags, navBrand: "Search Results"});
     }
 });
 
