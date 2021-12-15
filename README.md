@@ -32,13 +32,13 @@ This app stores links to web pages on a database, but unlike the Chrome extensio
 
 ![Adding Tags cont.](https://i.imgur.com/1foaeZ8.png)
 
-![Populated Home Page](https://i.imgur.com/RtHEEsm.png)
+![Populated Home Page](https://i.imgur.com/3qttnnS.png)
 
 ![Expanded Link](https://i.imgur.com/B0V3pBp.png)
 
-![Search](https://i.imgur.com/3wxxZ9X.png)
+![Search](https://i.imgur.com/VDcKVZg.png)
 
-![Search Results](https://i.imgur.com/8OKaiDA.png)
+![Search Results](https://i.imgur.com/m1XJzRe.png)
 
 ![Responsive Design](https://i.imgur.com/Dm8YVs5.png)
 
