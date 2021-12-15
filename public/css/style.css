@@ -16,6 +16,21 @@
     display: grid;
 }
 
+header {
+    background-image: url("https://i.imgur.com/oGEjhXU.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+h1 {
+    color: white;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 4rem;
+    text-shadow: 1px 1px 2px #6b6a6a;
+}
+
 body {
     display: flex;
     flex-direction: column;
