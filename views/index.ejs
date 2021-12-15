@@ -6,7 +6,7 @@
 <body>
     <%- include("./partials/header"); %> 
     <main class="container" id="homepage">
-        <form class="" action="/search" method="POST">
+        <form class="search" action="/search" method="POST">
             <div class="row row-cols-1 row-cols-md-2">
                 <div class="col col-md-8">
                     <input type="text" class="form-control mb-3" name="term" placeholder="Search for a Link">
@@ -69,16 +69,18 @@
         <aside>
             <h6>Find by tag</h6>
             <% if(tags.length){ %>
-                <% tags.forEach(function(tag) { %>
-                    <form action="/filter" method="POST">
-                        <input type="hidden" name="tag" value="<%= tag.name %>">
-                        <input class="btn" type="submit" value="<%= tag.name %>">
-                    </form>
-                    <% }); %> 
-            <% } else { %>
-                <br>
-                <p>No tags</p>
-            <% } %> 
+                <div id="tab-container">
+                    <% tags.forEach(function(tag) { %>
+                        <form action="/filter" method="POST">
+                            <input type="hidden" name="tag" value="<%= tag.name %>">
+                            <input class="btn btn-light tag-filter-btn" type="submit" value="<%= tag.name %>">
+                        </form>
+                        <% }); %> 
+                    <% } else { %>
+                        <br>
+                        <p>No tags</p>
+                    <% } %> 
+                </div>
         </aside>
     </main>
     <%- include("./partials/footer") %> 

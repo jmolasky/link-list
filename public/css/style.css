@@ -50,6 +50,10 @@ footer {
     margin-top: 1rem;
 }
 
+.search {
+    margin-top: 1rem;
+}
+
 .add-edit-btn {
     height: 38px;
 }
@@ -66,4 +70,15 @@ footer {
 
 .remove-tag-btn:hover {
     cursor: pointer;
+}
+
+.tag-filter-btn {
+    margin-bottom: .5rem;
+    background-color: #85e2d9
+}
+
+#tab-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
