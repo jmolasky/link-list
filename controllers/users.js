@@ -9,7 +9,7 @@ usersRouter.get("/login", (req, res) => {
 
 usersRouter.post("/login", (req, res) => {
     User.findOne({ email: req.body.email }, "+password", (err, foundUser) => {
-        if(!foundUser) return res.render("login.ejs", { err: "invalid credentials"});
+        if(!foundUser) return res.render("login.ejs", { err: "invalid credentials", navBrand: "Log In"});
         if(!bcrypt.compareSync(req.body.password, foundUser.password)) {
             return res.render("login.ejs", { err: "invalid credentials", navBrand: "Log In"});
         }
@@ -23,12 +23,17 @@ usersRouter.get("/signup", (req, res) => {
 });
 
 usersRouter.post("/signup", (req, res) => {
-    const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
-    req.body.password = hash;
-    User.create(req.body, (err, user) => {
-        req.session.user = user._id;
-        res.redirect("/");
-    });
+    // if there is an email and a password
+    if(req.body.password !== '' && req.body.email !== '') {
+        const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
+        req.body.password = hash;
+        User.create(req.body, (err, user) => {
+            req.session.user = user._id;
+            res.redirect("/");
+        });
+    } else {
+        res.redirect("/signup");
+    }
 });
 
 usersRouter.get("/logout", (req, res) => {

@@ -6,9 +6,6 @@
 <body>
     <%- include("./partials/header"); %> 
     <main class="container">
-        <% if(err !== '') { %> 
-            <p style="color: red; text-transform: capitalize;"><%= err %></p>
-        <% } %> 
         <form class="row row-cols-1 login-signup" action="/login" method="POST">
             <div class="col mb-3">
                 <label class="form-label">Email</label>
@@ -21,6 +18,9 @@
             <div class="col mb-3 d-grid mx-auto add-edit-btn justify-content-md-center">
                 <input class="btn btn-primary" type="submit" value="Log In">
             </div>
+            <% if(err !== '') { %> 
+                <p style="color: red; text-transform: capitalize; text-align: center;"><%= err %></p>
+            <% } %> 
         </form>
     </main>
     <%- include("./partials/footer") %> 

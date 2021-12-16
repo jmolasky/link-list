@@ -19,7 +19,7 @@ linksRouter.post("/search", async (req, res) => {
     } else {
         const tags = await Tag.find({ user: res.locals.user });
         const term = req.body.term;
-        let links = await Link.find({ title: { $regex: term }});
+        let links = await Link.find({ title: { $regex: term }}).populate("tags", "name");
         if(links.length === 0) {
             links = "No Results";
         }
@@ -33,9 +33,20 @@ linksRouter.post("/filter", async (req, res) => {
         res.redirect("/login");
     } else {
         const tags = await Tag.find({ user: res.locals.user });
-        let tag = await Tag.findOne({ user: mongoose.Types.ObjectId( res.locals.user ), name: req.body.tag });
-        tag = await tag.populate("links");
-        const links = tag.links;
+        let tag = await Tag
+            .findOne({ user: mongoose.Types.ObjectId( res.locals.user ), name: req.body.tag })
+            .populate({
+                path: "links",
+                populate: {
+                    path: "tags",
+                    // only returns the name field of the tag document, excluding the _id
+                    select: "name -_id"
+                }
+            });
+        let links = tag.links;
+        links[0].tags.forEach(function(tag) {
+            console.log(tag);
+        });
         res.render("index.ejs", { links, tags, navBrand: "links"});
     }
 });
