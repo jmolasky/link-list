@@ -44,9 +44,6 @@ linksRouter.post("/filter", async (req, res) => {
                 }
             });
         let links = tag.links;
-        links[0].tags.forEach(function(tag) {
-            console.log(tag);
-        });
         res.render("index.ejs", { links, tags, navBrand: "links"});
     }
 });

@@ -11,6 +11,9 @@
                 <label class="form-label">Email</label>
                 <input type="email" class="form-control" name="email">
             </div>
+            <% if(typeof error !== 'undefined') { %> 
+                <p style="color: red; text-transform: capitalize; text-align: center;"><%= error %></p>
+            <% } %> 
             <div class="col mb-3">
                 <label class="form-label">Password</label>
                 <input type="password" class="form-control" name="password">

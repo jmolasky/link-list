@@ -22,15 +22,26 @@ usersRouter.get("/signup", (req, res) => {
     res.render("signup.ejs", { navBrand: "Sign Up"});
 });
 
-usersRouter.post("/signup", (req, res) => {
+usersRouter.post("/signup", async (req, res) => {
     // if there is an email and a password
     if(req.body.password !== '' && req.body.email !== '') {
         const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
         req.body.password = hash;
-        User.create(req.body, (err, user) => {
+        try {
+            const user = await User.create(req.body);
             req.session.user = user._id;
             res.redirect("/");
-        });
+        } catch(err) {
+            // if the email is taken
+            if(err.name === "ValidationError") {
+                const errorMessage = err.errors.email.message;
+                console.log(errorMessage);
+                res.render("signup.ejs", { navBrand: "Sign Up", error: "Email is taken"});
+            } else {
+                res.redirect("/signup");
+            }
+        }
+
     } else {
         res.redirect("/signup");
     }

@@ -18,6 +18,7 @@
     "express-session": "^1.17.2",
     "method-override": "^3.0.0",
     "mongoose": "^6.0.14",
+    "mongoose-unique-validator": "^3.0.0",
     "morgan": "^1.10.0"
   }
 }

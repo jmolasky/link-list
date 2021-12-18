@@ -82,3 +82,9 @@ footer {
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+
+@media screen and (max-width: 20rem) {
+    .login-signup {
+        margin-top: 1.5rem;
+    }
+}
