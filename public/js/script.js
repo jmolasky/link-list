@@ -17,14 +17,27 @@ $(function() {
     const $addForm = $("#add-form");
     const $tagsDisplay = $("#tags-display");
     const $removeTagButton = $(".remove-tag-btn");
+    const $titleInput = $("#title");
+    const $urlInput = $("#url");
+    const $linkSubmitButton = $("#link-submit-btn");
 
     // event listeners
 
     $tagButton.on('click', handleClick);
     $addForm.on('submit', handleSubmit);
     $tagsDisplay.on('click', '.remove-tag-btn', handleRemoveTag);
+    $titleInput.keyup(checkInput);
+    $urlInput.keyup(checkInput);
 
     // functions
+
+    function checkInput() {
+        if($titleInput.val() && $urlInput.val() && $linkSubmitButton.attr("disabled")) {
+            $linkSubmitButton.removeAttr("disabled");
+        } else {
+            $linkSubmitButton.attr("disabled", "true");
+        }
+    }
 
     function handleClick(evt) {
         evt.preventDefault();
