@@ -22,6 +22,7 @@ This app stores links to web pages on a database, but unlike the Chrome extensio
 - Axios
 - bcrypt
 - LinkPreview API
+- Railway
 
 ## Screenshots
 ![Home Page](https://i.imgur.com/D3yQJo3.png)
@@ -44,7 +45,7 @@ This app stores links to web pages on a database, but unlike the Chrome extensio
 
 ## Getting Started 
 
-[Click here](https://link-list-92.herokuapp.com/) to see the site live!
+[Click here](https://link-list.up.railway.app/) to see the site live!
 
 Simply sign up for an account and start adding links and tags!
 
