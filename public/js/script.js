@@ -26,8 +26,8 @@ $(function() {
     $tagButton.on('click', handleClick);
     $addForm.on('submit', handleSubmit);
     $tagsDisplay.on('click', '.remove-tag-btn', handleRemoveTag);
-    $titleInput.keyup(checkInput);
-    $urlInput.keyup(checkInput);
+    $titleInput.on('keyup', checkInput);
+    $urlInput.on('keyup', checkInput);
 
     // functions
 
