@@ -32,11 +32,12 @@ $(function() {
     // functions
 
     function checkInput() {
-        if($titleInput.val() && $urlInput.val() && $linkSubmitButton.attr("disabled")) {
-            console.log("disabled");
+        // && $linkSubmitButton.attr("disabled")
+        if($titleInput.val() && $urlInput.val()) {
+            console.log("remove disabled");
             $linkSubmitButton.removeAttr("disabled");
         } else {
-            console.log("not disabled");
+            console.log("add disabled");
             $linkSubmitButton.attr("disabled", "true");
         }
     }
